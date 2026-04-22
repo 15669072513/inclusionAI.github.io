@@ -407,6 +407,444 @@ h2.heroTitle {
   background: #17191c;
 }
 
+/* ------------------------------------------------------------------ */
+/* Leaderboard                                                          */
+/* ------------------------------------------------------------------ */
+.leaderboard {
+  margin: 2em auto;
+  padding: 0 16px;
+  max-width: 1200px;
+}
+
+.leaderboardFilters {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 140px;
+}
+
+.filterLabel {
+  font-family: Montserrat-Medium, Arial, sans-serif;
+  font-size: 13px;
+  color: #555;
+  text-align: left;
+}
+
+.filterSelect {
+  padding: 10px 14px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-family: Montserrat-Regular, Arial, sans-serif;
+  font-size: 14px;
+  color: #17191c;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  outline: none;
+  width: 180px;
+  height: 42px;
+  box-sizing: border-box;
+}
+
+.filterSelect:hover {
+  border-color: #999;
+}
+
+.filterSelect:focus {
+  border-color: #17191c;
+}
+
+.filterInput {
+  padding: 10px 14px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-family: Montserrat-Regular, Arial, sans-serif;
+  font-size: 14px;
+  color: #17191c;
+  background: #fff;
+  transition: border-color 0.2s;
+  outline: none;
+  width: 180px;
+  height: 42px;
+  box-sizing: border-box;
+}
+
+.filterInput:hover {
+  border-color: #999;
+}
+
+.filterInput:focus {
+  border-color: #17191c;
+}
+
+.filterInput::placeholder {
+  color: #9ca3af;
+}
+
+/* 日期选择组 */
+.dateSelectGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dateSelectGroup .filterSelect {
+  min-width: 80px;
+}
+
+.dateSelectDivider {
+  font-family: Montserrat-Regular, Arial, sans-serif;
+  font-size: 14px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+/* Tab buttons for time range type */
+.tabButtons {
+  display: flex;
+  gap: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+  width: 160px;
+}
+
+.tabButton {
+  flex: 1;
+  padding: 10px 16px;
+  height: 42px;
+  border: none;
+  background: #fff;
+  font-family: Montserrat-Regular, Arial, sans-serif;
+  font-size: 14px;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.tabButton:hover {
+  background: #f3f4f6;
+  color: #17191c;
+}
+
+.tabButtonActive {
+  background: #22c55e;
+  color: #fff;
+}
+
+.tabButtonActive:hover {
+  background: #16a34a;
+  color: #fff;
+}
+
+.leaderboardTable {
+  overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px 0 rgba(208, 208, 208, 0.5);
+  margin: 0 auto;
+}
+
+/* 表头样式 */
+.leaderboardHeader {
+  display: flex;
+  align-items: center;
+  background: #f8f9fa;
+  border-bottom: 1px solid #eee;
+  border-radius: 12px 12px 0 0;
+}
+
+.headerCell {
+  padding: 16px 0px 16px 10px;
+  text-align: left;
+  font-family: Montserrat-Medium, Arial, sans-serif;
+  font-size: 13px;
+  color: #555;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+}
+.headerCellProject {
+  padding: 16px 0 16px 10px;
+  margin-left: 20px;
+  text-align: left;
+  font-family: Montserrat-Medium, Arial, sans-serif;
+  font-size: 13px;
+  color: #555;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+}
+
+
+.headerCell:hover {
+  background: #e9ecef;
+}
+
+/* 排名列 */
+.headerCell:nth-child(1) {
+  width: 80px;
+  padding-right: 30px;
+}
+
+/* 项目列 */
+.headerCell:nth-child(2) {
+  flex: 1;
+  min-width: 560px;
+}
+
+/* OpenRank列 */
+.headerCell:nth-child(3) {
+  width: 120px;
+  padding-left: 10px;
+}
+
+/* 参与者列 */
+.headerCell:nth-child(4) {
+  width: 120px;
+  padding-left: 10px;
+}
+
+/* 数据区域 */
+.leaderboardTbody {
+  background: #fff;
+  border-radius: 0 0 12px 12px;
+}
+
+/* 条形区块样式 */
+.leaderboardRow {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e5e7eb;
+  background: #fff;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.leaderboardRow:last-child {
+  border-bottom: none;
+  border-radius: 0 0 12px 12px;
+}
+
+.leaderboardRow:first-child {
+  border-radius: 0;
+}
+
+.leaderboardRow:hover {
+  background: #fafafa;
+  box-shadow: inset 0 0 0 1px #e5e7eb;
+}
+
+/* 排名列 */
+.rankCellWrapper {
+  width: 80px;
+  padding: 16px 12px 16px 16px;
+  flex-shrink: 0;
+  text-align: left;
+}
+
+/* 项目列 */
+.projectCellWrapper {
+  flex: 1;
+  min-width: 560px;
+  padding: 16px 12px;
+}
+
+/* OpenRank列 */
+.openrankCell {
+  width: 120px;
+  padding: 16px 12px 16px 10px;
+  flex-shrink: 0;
+}
+
+/* 参与者列 */
+.participantsCell {
+  width: 120px;
+  padding: 16px 16px 16px 10px;
+  flex-shrink: 0;
+}
+
+.rankCell {
+  font-size: 24px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.rank1 {
+  filter: drop-shadow(0 0 4px #ffd700);
+}
+
+.rank2 {
+  filter: drop-shadow(0 0 4px #c0c0c0);
+}
+
+.rank3 {
+  filter: drop-shadow(0 0 4px #cd7f32);
+}
+
+/* Rank change indicators */
+.rankChange {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.rankUp {
+  color: #166534;
+  background: #dcfce7;
+}
+
+.rankDown {
+  color: #dc2626;
+  background: #fee2e2;
+}
+
+.rankNoChange {
+  color: #9ca3af;
+  font-size: 11px;
+}
+
+/* Project cell - 已在上方定义 */
+
+.projectInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.projectLogo {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: #f8f9fa;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+.projectDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.projectName {
+  font-family: Montserrat-Medium, Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #17191c;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.projectDesc {
+  font-family: Montserrat-Regular, Arial, sans-serif;
+  font-size: 12px;
+  color: #6b7280;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 600px;
+  text-align: left;
+}
+
+/* OpenRank 值样式 */
+.openrankValue {
+  display: block;
+  font-family: Montserrat-Medium, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a56db;
+  margin-bottom: 4px;
+}
+
+/* 参与者值样式 */
+.participantsValue {
+  font-family: Montserrat-Medium, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #17191c;
+  margin-bottom: 4px;
+}
+
+/* Score cell wrapper */
+.scoreCellWrapper {
+  text-align: center;
+  vertical-align: middle;
+  width: 120px;
+}
+
+.totalScoreCell {
+  display: block;
+  font-family: Montserrat-Bold, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #166534;
+  margin-bottom: 4px;
+}
+
+.scoreDetails {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  font-size: 10px;
+  color: #6b7280;
+}
+
+.scoreDetails span {
+  padding: 2px 4px;
+  background: #f3f4f6;
+  border-radius: 3px;
+}
+
+.sortIcon {
+  margin-left: 4px;
+  font-size: 10px;
+}
+
+@media (max-width: 996px) {
+  .leaderboardFilters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filterGroup {
+    min-width: 100%;
+  }
+
+  .leaderboardTable th,
+  .leaderboardTable td {
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+
+  .projectDesc {
+    display: none;
+  }
+
+  .scoreDetails {
+    display: none;
+  }
+}
+
 @media (max-width: 996px) {
   .sliderArrow {
     width: 32px;
@@ -417,4 +855,40 @@ h2.heroTitle {
     width: 11px;
     height: 11px;
   }
+}
+
+/* 日期选择器面板样式优化 */
+.ant-picker-dropdown {
+  --antd-arrow-size: 14px;
+}
+
+.ant-picker-panel-container {
+  width: auto !important;
+}
+
+.ant-picker-panel {
+  width: 280px !important;
+}
+
+.ant-picker-header {
+  padding: 8px 8px !important;
+}
+
+.ant-picker-content {
+  width: 100% !important;
+}
+
+.ant-picker-cell {
+  padding: 0 !important;
+}
+
+.ant-picker-cell-inner {
+  width: 32px !important;
+  height: 32px !important;
+  line-height: 32px !important;
+}
+
+.ant-picker-year-panel,
+.ant-picker-month-panel {
+  width: 100% !important;
 }
