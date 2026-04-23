@@ -272,3 +272,22 @@ article.margin-bottom--xl {
   overflow-x: auto;
   padding: 8px 0;
 }
+
+/* 自定义日期选择器样式 - 用于填满面板 */
+.custom-date-picker-popup .ant-picker-panel {
+  width: 210px !important;
+  height: 230px !important;
+  padding: 2px !important;
+}
+
+.custom-date-picker-popup .ant-picker-cell-inner {
+  width: 60px !important;
+  height: 30px !important;
+}
+
+.custom-date-picker-popup .ant-picker-header {
+  padding: 5px !important;
+  width: 200px !important;
+  height: 40px !important;
+  border-bottom: 1px solid #f0f0f0 !important;
+}

@@ -856,39 +856,3 @@ h2.heroTitle {
     height: 11px;
   }
 }
-
-/* 日期选择器面板样式优化 */
-.ant-picker-dropdown {
-  --antd-arrow-size: 14px;
-}
-
-.ant-picker-panel-container {
-  width: auto !important;
-}
-
-.ant-picker-panel {
-  width: 280px !important;
-}
-
-.ant-picker-header {
-  padding: 8px 8px !important;
-}
-
-.ant-picker-content {
-  width: 100% !important;
-}
-
-.ant-picker-cell {
-  padding: 0 !important;
-}
-
-.ant-picker-cell-inner {
-  width: 32px !important;
-  height: 32px !important;
-  line-height: 32px !important;
-}
-
-.ant-picker-year-panel,
-.ant-picker-month-panel {
-  width: 100% !important;
-}

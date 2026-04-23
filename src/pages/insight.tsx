@@ -196,7 +196,14 @@ function Leaderboard() {
         {/* 日期选择框 */}
         <div className={styles.filterGroup} style={{ width: '180px' }}>
           <label className={styles.filterLabel}>时间选择</label>
-          <ConfigProvider locale={zhCN}>
+          <ConfigProvider
+            locale={zhCN}
+            theme={{
+              token: {
+                fontSize: 16,
+              },
+            }}
+          >
             <DatePicker
               value={timeRangeType === "month"
                 ? dayjs(`${selectedYear}-${selectedMonth}`, "YYYY-MM")
@@ -214,7 +221,8 @@ function Leaderboard() {
                 }
               }}
               allowClear={false}
-              style={{ width: '100%' ,height:'42px'}}
+              style={{ width: '100%', height: '42px' }}
+              popupClassName="custom-date-picker-popup"
             />
           </ConfigProvider>
         </div>
