@@ -1167,7 +1167,7 @@ h2.heroTitle {
   font-size: 16px;
   font-weight: 600;
   color: #17191c;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .contributorsTable {
@@ -1346,12 +1346,12 @@ h2.heroTitle {
   justify-content: space-between;
   align-items: flex-start;
   gap: 24px;
-  margin-bottom: 32px;
+  margin-bottom: 10px;
 }
 
 .statsCards {
   display: flex;
-  gap: 24px;
+  gap: 10px;
   flex: 1;
 }
 
@@ -1360,8 +1360,8 @@ h2.heroTitle {
   background: #fff;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
-  padding: 20px 28px;
-  min-width: 300px;
+  padding: 5px 10px;
+  min-width: 250px;
 }
 
 .statCardContent {
@@ -1429,7 +1429,7 @@ h2.heroTitle {
 .timeSelector {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-shrink: 0;
 }
 
@@ -1585,7 +1585,7 @@ h2.heroTitle {
 }
 
 .contributorsSectionHeader .sectionTitle {
-  margin-bottom: 0;
+  margin-bottom: 10px;
 }
 
 .contributorsTimeSelector {
@@ -1693,7 +1693,7 @@ h2.heroTitle {
 
   .statsCards {
     flex-direction: column;
-    width: 100%;
+    width: 60%;
   }
 
   .timeSelector {
