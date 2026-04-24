@@ -7,7 +7,7 @@
   padding: 50px 0 0 0;
 }
 
-.hero:first {
+.hero:first-of-type {
   padding: 150px 0 0 0;
 }
 
@@ -929,8 +929,8 @@ h2.heroTitle {
 
 /* Project Detail Container */
 .projectDetailContainer {
-  padding: 40px 24px 80px;
-  max-width: 1200px;
+  padding: 40px 32px 80px;
+  max-width: 1600px;
   margin: 0 auto;
 }
 
@@ -1181,7 +1181,7 @@ h2.heroTitle {
 
 .contributorsTable th {
   background: #f8f9fa;
-  padding: 14px 16px;
+  padding: 24px 40px;
   text-align: left;
   font-family: Montserrat-Medium, Arial, sans-serif;
   font-size: 13px;
@@ -1190,8 +1190,14 @@ h2.heroTitle {
   border-bottom: 1px solid #e5e7eb;
 }
 
+.contributorsTable th:nth-child(2),
+.contributorsTable td:nth-child(2) {
+  padding-left: 80px;
+  padding-right: 80px;
+}
+
 .contributorsTable td {
-  padding: 14px 16px;
+  padding: 24px 60px;
   font-family: Montserrat-Regular, Arial, sans-serif;
   font-size: 14px;
   color: #17191c;
@@ -1222,4 +1228,480 @@ h2.heroTitle {
 .contributorOpenrank {
   font-weight: 600;
   color: #1d4ed8;
+}
+
+/* ========== New Project Detail Styles ========== */
+
+/* Project Intro Section */
+.projectIntroSection {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  margin-bottom: 24px;
+}
+
+.projectIntroLeft {
+  flex-shrink: 0;
+}
+
+.projectIntroLogo {
+  border-radius: 16px;
+  object-fit: contain;
+  background: #f8f9fa;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border: 1px solid #e5e7eb;
+}
+
+.userIntroLogo {
+  width: 100px;
+  height: 100px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: #f8f9fa;
+  padding: 2px;
+  border: 1px solid #e5e7eb;
+}
+
+.projectIntroRight {
+  flex: 1;
+  min-width: 0;
+}
+
+.projectTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.projectIntroTitle {
+  font-family: Montserrat-Bold, Arial, sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #17191c;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.projectIntroTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.projectTag {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #dbeafe;
+  color: #1d4ed8;
+  border-radius: 16px;
+  font-family: Montserrat-Medium, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.projectIntroDesc {
+  font-family: Montserrat-Regular, Arial, sans-serif;
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0 0 16px;
+  max-width: 1100px;
+}
+
+.projectIntroMeta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.websiteLink {
+  color: #22c55e;
+  text-decoration: none;
+  font-family: Montserrat-Medium, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.websiteLink:hover {
+  color: #16a34a;
+  text-decoration: underline;
+}
+
+/* Stats Section */
+.statsSection {
+  margin-bottom: 24px;
+}
+
+.statsSectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.statsCards {
+  display: flex;
+  gap: 24px;
+  flex: 1;
+}
+
+.statCardLarge {
+  flex: 1;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px 28px;
+  min-width: 300px;
+}
+
+.statCardContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.statCardLeft {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.statIconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #dcfce7;
+  color: #16a34a;
+  flex-shrink: 0;
+}
+
+.statIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.statValueBlock {
+  display: flex;
+  flex-direction: column;
+}
+
+.statValueBlock .statValueLarge {
+  font-family: Montserrat-Bold, Arial, sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #17191c;
+  line-height: 1.2;
+}
+
+.statValueBlock .statLabel {
+  font-family: Montserrat-Regular, Arial, sans-serif;
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.statCardRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.statChangeLabel {
+  font-family: Montserrat-Regular, Arial, sans-serif;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.timeSelector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* Tab buttons */
+.tabButtons {
+  display: flex;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tabButton {
+  padding: 8px 16px;
+  border: none;
+  background: #fff;
+  font-family: Montserrat-Regular, Arial, sans-serif;
+  font-size: 13px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tabButton:not(:last-child) {
+  border-right: 1px solid #e5e7eb;
+}
+
+.tabButton:hover {
+  background: #f9fafb;
+}
+
+.tabButtonActive {
+  background: #22c55e;
+  color: #fff;
+}
+
+.tabButtonActive:hover {
+  background: #16a34a;
+}
+
+/* Small Tab buttons */
+.tabButtonsSmall {
+  display: flex;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.tabButtonSmall {
+  padding: 4px 12px;
+  border: none;
+  background: #fff;
+  font-family: Montserrat-Regular, Arial, sans-serif;
+  font-size: 12px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tabButtonSmall:not(:last-child) {
+  border-right: 1px solid #e5e7eb;
+}
+
+.tabButtonSmall:hover {
+  background: #f9fafb;
+}
+
+.tabButtonSmallActive {
+  background: #22c55e;
+  color: #fff;
+}
+
+.tabButtonSmallActive:hover {
+  background: #16a34a;
+}
+
+/* Change indicator */
+.changeIndicator {
+  font-family: Montserrat-Medium, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.changeUp {
+  color: #16a34a;
+}
+
+.changeDown {
+  color: #dc2626;
+}
+
+.changeZero {
+  color: #9ca3af;
+}
+
+/* History Section */
+.historySection {
+  margin-bottom: 24px;
+}
+
+.chartsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.chartCard {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 28px;
+}
+
+.chartTitle {
+  font-family: Montserrat-Medium, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #17191c;
+  margin-bottom: 16px;
+}
+
+/* Line Chart */
+.lineChartContainer {
+  position: relative;
+  height: 160px;
+}
+
+.lineChart {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 20px);
+}
+
+.lineChartXAxis {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  font-family: Montserrat-Regular, Arial, sans-serif;
+  font-size: 10px;
+  color: #9ca3af;
+}
+
+/* Contributors Section */
+.contributorsSectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.contributorsSectionHeader .sectionTitle {
+  margin-bottom: 0;
+}
+
+.contributorsTimeSelector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Rank badges */
+.rankBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-family: Montserrat-Bold, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.rankBadge1 {
+  background: #fbbf24;
+  color: #fff;
+}
+
+.rankBadge2 {
+  background: #9ca3af;
+  color: #fff;
+}
+
+.rankBadge3 {
+  background: #d97706;
+  color: #fff;
+}
+
+/* Contributor info */
+.contributorInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.contributorAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.contributorInfo .contributorName {
+  color: #17191c;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.contributorInfo .contributorName:hover {
+  color: #22c55e;
+  text-decoration: underline;
+}
+
+/* User dashboard button */
+.userDashboardButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.userDashboardButton:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.userDashboardButton svg {
+  width: 18px;
+  height: 18px;
+  color: #4b5563;
+}
+
+/* Responsive */
+@media (max-width: 996px) {
+  .projectIntroSection {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .projectIntroMeta {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .statsSectionHeader {
+    flex-direction: column;
+  }
+
+  .statsCards {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .timeSelector {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .chartsGrid {
+    grid-template-columns: 1fr;
+  }
 }
