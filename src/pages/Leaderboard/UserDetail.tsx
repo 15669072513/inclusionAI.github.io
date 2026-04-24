@@ -200,7 +200,6 @@ export default function UserDetail({ userName, onBack }: { userName: string; onB
         <div className={styles.projectIntroRight}>
           <div className={styles.projectTitleRow}>
             <h1 className={styles.projectIntroTitle}>{data.name}</h1>
-            <span className={styles.platformBadge}>{data.platform}</span>
           </div>
           <p className={styles.projectIntroDesc}>{data.bio}</p>
         </div>
