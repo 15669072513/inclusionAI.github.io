@@ -34,7 +34,7 @@ interface ProjectDetailData {
   participantsHistory: { date: string; value: number }[];
   issueCountHistory: { date: string; value: number }[];
   // 贡献者
-  contributors: { rank: number; name: string; platform: string; avatar: string; openrank: number; change: number; profileUrl: string }[];
+  contributors: { rank: number; prevRank: number; name: string; platform: string; avatar: string; openrank: number; change: number; profileUrl: string }[];
 }
 
 // 生成历史数据
@@ -139,16 +139,16 @@ function getMockProjectData(projectName: string): ProjectDetailData {
         { date: "2026-03", value: 720 },
       ],
       contributors: [
-        { rank: 1, name: "tensorflow_dev", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/1?v=4", openrank: 45.2, change: 2.1, profileUrl: "https://github.com/tensorflow" },
-        { rank: 2, name: "ml_expert", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/2?v=4", openrank: 38.7, change: -1.2, profileUrl: "https://github.com" },
-        { rank: 3, name: "ai_researcher", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/3?v=4", openrank: 35.4, change: 0.5, profileUrl: "https://github.com" },
-        { rank: 4, name: "deep_learning_dev", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/4?v=4", openrank: 32.1, change: 1.8, profileUrl: "https://github.com" },
-        { rank: 5, name: "data_scientist", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/5?v=4", openrank: 28.9, change: -0.5, profileUrl: "https://github.com" },
-        { rank: 6, name: "ml_engineer", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/6?v=4", openrank: 25.6, change: 1.2, profileUrl: "https://github.com" },
-        { rank: 7, name: "ai_developer", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/7?v=4", openrank: 23.2, change: 0.8, profileUrl: "https://github.com" },
-        { rank: 8, name: "research_scientist", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/8?v=4", openrank: 21.5, change: -0.3, profileUrl: "https://github.com" },
-        { rank: 9, name: "neural_net_dev", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/9?v=4", openrank: 19.8, change: 1.5, profileUrl: "https://github.com" },
-        { rank: 10, name: "model_trainer", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/10?v=4", openrank: 18.2, change: 0.2, profileUrl: "https://github.com" },
+        { rank: 1, prevRank: 3, name: "tensorflow_dev", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/1?v=4", openrank: 45.2, change: 2.1, profileUrl: "https://github.com/tensorflow" },
+        { rank: 2, prevRank: 1, name: "ml_expert", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/2?v=4", openrank: 38.7, change: -1.2, profileUrl: "https://github.com" },
+        { rank: 3, prevRank: 2, name: "ai_researcher", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/3?v=4", openrank: 35.4, change: 0.5, profileUrl: "https://github.com" },
+        { rank: 4, prevRank: 6, name: "deep_learning_dev", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/4?v=4", openrank: 32.1, change: 1.8, profileUrl: "https://github.com" },
+        { rank: 5, prevRank: 4, name: "data_scientist", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/5?v=4", openrank: 28.9, change: -0.5, profileUrl: "https://github.com" },
+        { rank: 6, prevRank: 8, name: "ml_engineer", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/6?v=4", openrank: 25.6, change: 1.2, profileUrl: "https://github.com" },
+        { rank: 7, prevRank: 5, name: "ai_developer", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/7?v=4", openrank: 23.2, change: 0.8, profileUrl: "https://github.com" },
+        { rank: 8, prevRank: 7, name: "research_scientist", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/8?v=4", openrank: 21.5, change: -0.3, profileUrl: "https://github.com" },
+        { rank: 9, prevRank: 10, name: "neural_net_dev", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/9?v=4", openrank: 19.8, change: 1.5, profileUrl: "https://github.com" },
+        { rank: 10, prevRank: 9, name: "model_trainer", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/10?v=4", openrank: 18.2, change: 0.2, profileUrl: "https://github.com" },
       ],
     },
     "PyTorch": {
@@ -173,16 +173,16 @@ function getMockProjectData(projectName: string): ProjectDetailData {
       participantsHistory: generateHistoryData(2800, 15, 100),
       issueCountHistory: generateHistoryData(600, 15, 50),
       contributors: [
-        { rank: 1, name: "pytorch_team", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/11?v=4", openrank: 42.1, change: 1.5, profileUrl: "https://github.com/pytorch" },
-        { rank: 2, name: "deeplearning_dev", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/12?v=4", openrank: 36.8, change: 0.8, profileUrl: "https://github.com" },
-        { rank: 3, name: "meta_ai", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/13?v=4", openrank: 34.2, change: -0.3, profileUrl: "https://github.com" },
-        { rank: 4, name: "ml_researcher", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/14?v=4", openrank: 30.5, change: 1.2, profileUrl: "https://github.com" },
-        { rank: 5, name: "tensor_dev", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/15?v=4", openrank: 27.8, change: 0.5, profileUrl: "https://github.com" },
-        { rank: 6, name: "ai_scientist", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/16?v=4", openrank: 24.3, change: -0.8, profileUrl: "https://github.com" },
-        { rank: 7, name: "neural_ninja", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/17?v=4", openrank: 22.1, change: 1.1, profileUrl: "https://github.com" },
-        { rank: 8, name: "deep_mind", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/18?v=4", openrank: 20.5, change: 0.3, profileUrl: "https://github.com" },
-        { rank: 9, name: "torch_user", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/19?v=4", openrank: 18.9, change: -0.5, profileUrl: "https://github.com" },
-        { rank: 10, name: "ml_enthusiast", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/20?v=4", openrank: 17.2, change: 0.8, profileUrl: "https://github.com" },
+        { rank: 1, prevRank: 2, name: "pytorch_team", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/11?v=4", openrank: 42.1, change: 1.5, profileUrl: "https://github.com/pytorch" },
+        { rank: 2, prevRank: 3, name: "deeplearning_dev", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/12?v=4", openrank: 36.8, change: 0.8, profileUrl: "https://github.com" },
+        { rank: 3, prevRank: 1, name: "meta_ai", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/13?v=4", openrank: 34.2, change: -0.3, profileUrl: "https://github.com" },
+        { rank: 4, prevRank: 5, name: "ml_researcher", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/14?v=4", openrank: 30.5, change: 1.2, profileUrl: "https://github.com" },
+        { rank: 5, prevRank: 4, name: "tensor_dev", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/15?v=4", openrank: 27.8, change: 0.5, profileUrl: "https://github.com" },
+        { rank: 6, prevRank: 8, name: "ai_scientist", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/16?v=4", openrank: 24.3, change: -0.8, profileUrl: "https://github.com" },
+        { rank: 7, prevRank: 6, name: "neural_ninja", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/17?v=4", openrank: 22.1, change: 1.1, profileUrl: "https://github.com" },
+        { rank: 8, prevRank: 10, name: "deep_mind", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/18?v=4", openrank: 20.5, change: 0.3, profileUrl: "https://github.com" },
+        { rank: 9, prevRank: 7, name: "torch_user", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/19?v=4", openrank: 18.9, change: -0.5, profileUrl: "https://github.com" },
+        { rank: 10, prevRank: 9, name: "ml_enthusiast", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/20?v=4", openrank: 17.2, change: 0.8, profileUrl: "https://github.com" },
       ],
     },
   };
@@ -212,16 +212,16 @@ function getMockProjectData(projectName: string): ProjectDetailData {
     participantsHistory: generateHistoryData(1500, 15, 80),
     issueCountHistory: generateHistoryData(400, 15, 40),
     contributors: [
-      { rank: 1, name: "developer_1", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/1?v=4", openrank: 25.3, change: 1.2, profileUrl: "https://github.com" },
-      { rank: 2, name: "developer_2", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/2?v=4", openrank: 22.1, change: -0.5, profileUrl: "https://github.com" },
-      { rank: 3, name: "developer_3", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/3?v=4", openrank: 19.8, change: 0.3, profileUrl: "https://github.com" },
-      { rank: 4, name: "developer_4", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/4?v=4", openrank: 17.5, change: 0.8, profileUrl: "https://github.com" },
-      { rank: 5, name: "developer_5", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/5?v=4", openrank: 15.2, change: -0.2, profileUrl: "https://github.com" },
-      { rank: 6, name: "developer_6", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/6?v=4", openrank: 13.8, change: 0.5, profileUrl: "https://github.com" },
-      { rank: 7, name: "developer_7", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/7?v=4", openrank: 12.1, change: 0.3, profileUrl: "https://github.com" },
-      { rank: 8, name: "developer_8", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/8?v=4", openrank: 10.5, change: -0.4, profileUrl: "https://github.com" },
-      { rank: 9, name: "developer_9", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/9?v=4", openrank: 9.2, change: 0.6, profileUrl: "https://github.com" },
-      { rank: 10, name: "developer_10", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/10?v=4", openrank: 8.1, change: 0.1, profileUrl: "https://github.com" },
+      { rank: 1, prevRank: 2, name: "developer_1", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/1?v=4", openrank: 25.3, change: 1.2, profileUrl: "https://github.com" },
+      { rank: 2, prevRank: 1, name: "developer_2", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/2?v=4", openrank: 22.1, change: -0.5, profileUrl: "https://github.com" },
+      { rank: 3, prevRank: 4, name: "developer_3", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/3?v=4", openrank: 19.8, change: 0.3, profileUrl: "https://github.com" },
+      { rank: 4, prevRank: 3, name: "developer_4", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/4?v=4", openrank: 17.5, change: 0.8, profileUrl: "https://github.com" },
+      { rank: 5, prevRank: 6, name: "developer_5", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/5?v=4", openrank: 15.2, change: -0.2, profileUrl: "https://github.com" },
+      { rank: 6, prevRank: 5, name: "developer_6", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/6?v=4", openrank: 13.8, change: 0.5, profileUrl: "https://github.com" },
+      { rank: 7, prevRank: 8, name: "developer_7", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/7?v=4", openrank: 12.1, change: 0.3, profileUrl: "https://github.com" },
+      { rank: 8, prevRank: 7, name: "developer_8", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/8?v=4", openrank: 10.5, change: -0.4, profileUrl: "https://github.com" },
+      { rank: 9, prevRank: 10, name: "developer_9", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/9?v=4", openrank: 9.2, change: 0.6, profileUrl: "https://github.com" },
+      { rank: 10, prevRank: 9, name: "developer_10", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/10?v=4", openrank: 8.1, change: 0.1, profileUrl: "https://github.com" },
     ],
   };
 }
@@ -237,6 +237,30 @@ function ChangeIndicator({ current, previous }: { current: number; previous: num
     <span className={clsx(styles.changeIndicator, isUp ? styles.changeUp : styles.changeDown)}>
       {isUp ? "↑" : "↓"} {Math.abs(Math.round(diff * 10) / 10)}
     </span>
+  );
+}
+
+// 排名变化组件（用于表格，同时显示排名和变化）
+function RankWithChange({ rank, prevRank }: { rank: number; prevRank: number }) {
+  const change = prevRank - rank; // 排名上升 = 数字变大 = change为正
+
+  return (
+    <div className={styles.rankWithChange}>
+      <span className={clsx(styles.rankBadge, {
+        [styles.rankBadge1]: rank === 1,
+        [styles.rankBadge2]: rank === 2,
+        [styles.rankBadge3]: rank === 3,
+      })}>
+        {rank}
+      </span>
+      <span className={clsx(styles.rankChange, {
+        [styles.rankChangeUp]: change > 0,
+        [styles.rankChangeDown]: change < 0,
+        [styles.rankChangeZero]: change === 0,
+      })}>
+        {change > 0 ? `↑${change}` : change < 0 ? `↓${Math.abs(change)}` : '-'}
+      </span>
+    </div>
   );
 }
 
@@ -522,14 +546,8 @@ export default function ProjectDetail({ projectName, onBack }: { projectName: st
             {data.contributors.map((contributor) => (
                 <tr key={contributor.rank}>
                   <td>
-                  <span className={clsx(styles.rankBadge, {
-                    [styles.rankBadge1]: contributor.rank === 1,
-                    [styles.rankBadge2]: contributor.rank === 2,
-                    [styles.rankBadge3]: contributor.rank === 3,
-                  })}>
-                    {contributor.rank}
-                  </span>
-                  </td>
+                  <RankWithChange rank={contributor.rank} prevRank={contributor.prevRank} />
+                </td>
                   <td>
                     <div className={styles.contributorInfo}>
                       <img src={contributor.avatar} alt={contributor.name} className={styles.contributorAvatar}/>

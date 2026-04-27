@@ -1624,6 +1624,34 @@ h2.heroTitle {
   color: #fff;
 }
 
+/* Rank change in table */
+.rankWithChange {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rankChange {
+  display: inline-flex;
+  align-items: center;
+  font-family: Montserrat-Medium, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 24px;
+}
+
+.rankChangeUp {
+  color: #16a34a;
+}
+
+.rankChangeDown {
+  color: #dc2626;
+}
+
+.rankChangeZero {
+  color: #9ca3af;
+}
+
 /* Contributor info */
 .contributorInfo {
   display: flex;
