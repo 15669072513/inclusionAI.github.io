@@ -15,7 +15,7 @@ const config: Config = {
   },
 
   url: "https://www.inclusion-ai.org",
-  baseUrl: "/",
+  baseUrl: "/inclusionAI.github.io/",
 
   organizationName: "inclusionAI",
   projectName: "inclusionai.github.io",
