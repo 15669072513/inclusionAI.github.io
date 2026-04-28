@@ -1745,3 +1745,130 @@ h2.heroTitle {
     grid-template-columns: 1fr;
   }
 }
+
+/* Country Distribution Section */
+.countryDistributionSection {
+  margin-bottom: 40px;
+}
+
+.countryDistributionContent {
+  display: flex;
+  gap: 24px;
+}
+
+.countryDistributionList {
+  flex: 0 0 50%;
+}
+
+.countryTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.countryTable th {
+  background: #f8f9fa;
+  padding: 16px 20px;
+  text-align: left;
+  font-family: Montserrat-Medium, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.countryTable td {
+  padding: 14px 20px;
+  font-family: Montserrat-Regular, Arial, sans-serif;
+  font-size: 14px;
+  color: #17191c;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.countryTable tr:last-child td {
+  border-bottom: none;
+}
+
+.countryTable tr:hover {
+  background: #fafafa;
+}
+
+.countryRankBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-family: Montserrat-Bold, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.countryRankBadge1 {
+  background: #fbbf24;
+  color: #fff;
+}
+
+.countryRankBadge2 {
+  background: #9ca3af;
+  color: #fff;
+}
+
+.countryRankBadge3 {
+  background: #d97706;
+  color: #fff;
+}
+
+.countryInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.countryFlag {
+  font-size: 20px;
+}
+
+.countryName {
+  font-weight: 500;
+}
+
+.countryPercentage {
+  color: #6b7280;
+}
+
+.countryOpenrank {
+  font-weight: 600;
+  color: #1d4ed8;
+}
+
+.countryMapContainer {
+  flex: 1;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  min-height: 300px;
+}
+
+/* Responsive for country distribution */
+@media (max-width: 996px) {
+  .countryDistributionContent {
+    flex-direction: column;
+  }
+
+  .countryDistributionList {
+    flex: none;
+    width: 100%;
+  }
+
+  .countryMapContainer {
+    min-height: 250px;
+  }
+}

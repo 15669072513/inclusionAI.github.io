@@ -1,9 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { DatePicker, ConfigProvider, Spin } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import dayjs from "dayjs";
 import "dayjs/locale/zh-cn";
 import clsx from "clsx";
+import * as echarts from 'echarts';
+import 'echarts/lib/chart/map';
+import 'echarts/lib/component/geo';
+import 'echarts/lib/component/visualMap';
+import 'echarts/lib/component/tooltip';
+import 'echarts/lib/component/title';
 import styles from "../research.module.css";
 import UserDetail from "./UserDetail";
 
@@ -35,7 +41,46 @@ interface ProjectDetailData {
   issueCountHistory: { date: string; value: number }[];
   // 贡献者
   contributors: { rank: number; prevRank: number; name: string; platform: string; avatar: string; openrank: number; change: number; profileUrl: string }[];
+  // 贡献度分布（近一年）- 国家
+  countryDistribution: { rank: number; country: string; countryCode: string; flag: string; openrank: number; percentage: number }[];
 }
+
+// 国家名称映射（英文到中文）
+const countryNameMap: { [key: string]: string } = {
+  'United States': '美国',
+  'China': '中国',
+  'Germany': '德国',
+  'United Kingdom': '英国',
+  'India': '印度',
+  'France': '法国',
+  'Canada': '加拿大',
+  'Japan': '日本',
+  'South Korea': '韩国',
+  'Brazil': '巴西',
+  'Australia': '澳大利亚',
+  'Russia': '俄罗斯',
+  'Netherlands': '荷兰',
+  'Singapore': '新加坡',
+  'Switzerland': '瑞士',
+  'Italy': '意大利',
+  'Spain': '西班牙',
+  'Mexico': '墨西哥',
+  'Indonesia': '印度尼西亚',
+  'Saudi Arabia': '沙特阿拉伯',
+  'South Africa': '南非',
+  'Egypt': '埃及',
+  'Nigeria': '尼日利亚',
+  'Argentina': '阿根廷',
+  'Poland': '波兰',
+  'Turkey': '土耳其',
+  'Iran': '伊朗',
+  'Thailand': '泰国',
+  'Vietnam': '越南',
+  'Philippines': '菲律宾',
+  'Pakistan': '巴基斯坦',
+  'Bangladesh': '孟加拉国',
+  'Ukraine': '乌克兰',
+};
 
 // 生成历史数据
 function generateHistoryData(baseValue: number, months: number, variance: number): { date: string; value: number }[] {
@@ -150,6 +195,19 @@ function getMockProjectData(projectName: string): ProjectDetailData {
         { rank: 9, prevRank: 10, name: "neural_net_dev", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/9?v=4", openrank: 19.8, change: 1.5, profileUrl: "https://github.com" },
         { rank: 10, prevRank: 9, name: "model_trainer", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/10?v=4", openrank: 18.2, change: 0.2, profileUrl: "https://github.com" },
       ],
+      // 贡献度分布（近一年）
+      countryDistribution: [
+        { rank: 1, country: "美国", countryCode: "US", flag: "🇺🇸", openrank: 25480, percentage: 35.2 },
+        { rank: 2, country: "中国", countryCode: "CN", flag: "🇨🇳", openrank: 18200, percentage: 25.1 },
+        { rank: 3, country: "德国", countryCode: "DE", flag: "🇩🇪", openrank: 8920, percentage: 12.3 },
+        { rank: 4, country: "英国", countryCode: "GB", flag: "🇬🇧", openrank: 5620, percentage: 7.8 },
+        { rank: 5, country: "印度", countryCode: "IN", flag: "🇮🇳", openrank: 4210, percentage: 5.8 },
+        { rank: 6, country: "法国", countryCode: "FR", flag: "🇫🇷", openrank: 3150, percentage: 4.3 },
+        { rank: 7, country: "加拿大", countryCode: "CA", flag: "🇨🇦", openrank: 2890, percentage: 4.0 },
+        { rank: 8, country: "日本", countryCode: "JP", flag: "🇯🇵", openrank: 1850, percentage: 2.6 },
+        { rank: 9, country: "韩国", countryCode: "KR", flag: "🇰🇷", openrank: 1230, percentage: 1.7 },
+        { rank: 10, country: "巴西", countryCode: "BR", flag: "🇧🇷", openrank: 850, percentage: 1.2 },
+      ],
     },
     "PyTorch": {
       name: "PyTorch",
@@ -183,6 +241,19 @@ function getMockProjectData(projectName: string): ProjectDetailData {
         { rank: 8, prevRank: 10, name: "deep_mind", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/18?v=4", openrank: 20.5, change: 0.3, profileUrl: "https://github.com" },
         { rank: 9, prevRank: 7, name: "torch_user", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/19?v=4", openrank: 18.9, change: -0.5, profileUrl: "https://github.com" },
         { rank: 10, prevRank: 9, name: "ml_enthusiast", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/20?v=4", openrank: 17.2, change: 0.8, profileUrl: "https://github.com" },
+      ],
+      // 贡献度分布（近一年）
+      countryDistribution: [
+        { rank: 1, country: "美国", countryCode: "US", flag: "🇺🇸", openrank: 21850, percentage: 32.5 },
+        { rank: 2, country: "中国", countryCode: "CN", flag: "🇨🇳", openrank: 15620, percentage: 23.3 },
+        { rank: 3, country: "英国", countryCode: "GB", flag: "🇬🇧", openrank: 7850, percentage: 11.7 },
+        { rank: 4, country: "德国", countryCode: "DE", flag: "🇩🇪", openrank: 6580, percentage: 9.8 },
+        { rank: 5, country: "印度", countryCode: "IN", flag: "🇮🇳", openrank: 4920, percentage: 7.3 },
+        { rank: 6, country: "加拿大", countryCode: "CA", flag: "🇨🇦", openrank: 3650, percentage: 5.4 },
+        { rank: 7, country: "法国", countryCode: "FR", flag: "🇫🇷", openrank: 2890, percentage: 4.3 },
+        { rank: 8, country: "日本", countryCode: "JP", flag: "🇯🇵", openrank: 1650, percentage: 2.5 },
+        { rank: 9, country: "韩国", countryCode: "KR", flag: "🇰🇷", openrank: 980, percentage: 1.5 },
+        { rank: 10, country: "澳大利亚", countryCode: "AU", flag: "🇦🇺", openrank: 710, percentage: 1.1 },
       ],
     },
   };
@@ -222,6 +293,19 @@ function getMockProjectData(projectName: string): ProjectDetailData {
       { rank: 8, prevRank: 7, name: "developer_8", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/8?v=4", openrank: 10.5, change: -0.4, profileUrl: "https://github.com" },
       { rank: 9, prevRank: 10, name: "developer_9", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/9?v=4", openrank: 9.2, change: 0.6, profileUrl: "https://github.com" },
       { rank: 10, prevRank: 9, name: "developer_10", platform: "GitHub", avatar: "https://avatars.githubusercontent.com/u/10?v=4", openrank: 8.1, change: 0.1, profileUrl: "https://github.com" },
+    ],
+    // 贡献度分布（近一年）
+    countryDistribution: [
+      { rank: 1, country: "美国", countryCode: "US", flag: "🇺🇸", openrank: 12000, percentage: 30.0 },
+      { rank: 2, country: "中国", countryCode: "CN", flag: "🇨🇳", openrank: 8500, percentage: 21.3 },
+      { rank: 3, country: "德国", countryCode: "DE", flag: "🇩🇪", openrank: 4200, percentage: 10.5 },
+      { rank: 4, country: "印度", countryCode: "IN", flag: "🇮🇳", openrank: 3800, percentage: 9.5 },
+      { rank: 5, country: "英国", countryCode: "GB", flag: "🇬🇧", openrank: 3200, percentage: 8.0 },
+      { rank: 6, country: "法国", countryCode: "FR", flag: "🇫🇷", openrank: 2100, percentage: 5.3 },
+      { rank: 7, country: "加拿大", countryCode: "CA", flag: "🇨🇦", openrank: 1800, percentage: 4.5 },
+      { rank: 8, country: "日本", countryCode: "JP", flag: "🇯🇵", openrank: 1500, percentage: 3.8 },
+      { rank: 9, country: "韩国", countryCode: "KR", flag: "🇰🇷", openrank: 1200, percentage: 3.0 },
+      { rank: 10, country: "巴西", countryCode: "BR", flag: "🇧🇷", openrank: 1000, percentage: 2.5 },
     ],
   };
 }
@@ -321,6 +405,129 @@ function LineChart({ data, color = "#22c55e", unit = "" }: { data: { date: strin
       </div>
     </div>
   );
+}
+
+// 地图分布组件 - 使用世界地图
+function CountryMapChart({ data }: { data: ProjectDetailData['countryDistribution'] }) {
+  const chartRef = useRef<HTMLDivElement>(null);
+  const chartInstanceRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (!chartRef.current || !data || data.length === 0) return;
+
+    // 清理之前的图表实例
+    if (chartInstanceRef.current) {
+      chartInstanceRef.current.dispose();
+    }
+
+    const chart = echarts.init(chartRef.current);
+    chartInstanceRef.current = chart;
+
+    // 准备地图数据
+    const mapData = data.map(item => {
+      return {
+        name: item.country,
+        value: item.openrank,
+        flag: item.flag,
+        percentage: item.percentage,
+      };
+    });
+
+    const maxValue = Math.max(...data.map(d => d.openrank));
+    const minValue = 0;
+
+    // 显示加载状态
+    chart.showLoading();
+
+    // 从远程加载世界地图
+    fetch('https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/json/world.json')
+      .then(response => response.json())
+      .then(geoJson => {
+        chart.hideLoading();
+        echarts.registerMap('world', geoJson);
+
+        const option: any = {
+          title: {
+            text: '',
+            left: 'center',
+          },
+          tooltip: {
+            trigger: 'item',
+            formatter: (params: any) => {
+              if (params.data && params.data.value != null) {
+                const flag = params.data.flag || '';
+                const value = params.data.value ?? 0;
+                const percentage = params.data.percentage ?? 0;
+                return `${flag} ${params.name}<br/>OpenRank: ${value.toLocaleString()}<br/>占比: ${percentage}%`;
+              }
+              return params.name ? `${params.name}<br/>无数据` : '';
+            },
+          },
+          toolbox: {
+            show: true,
+            orient: 'vertical',
+            left: 'right',
+            top: 'center',
+            feature: {
+              dataView: { readOnly: false },
+              restore: {},
+              saveAsImage: {}
+            }
+          },
+          visualMap: {
+            min: minValue,
+            max: maxValue,
+            text: ['高', '低'],
+            realtime: false,
+            calculable: true,
+            inRange: {
+              color: ['lightskyblue', 'yellow', 'orangered']
+            }
+          },
+          series: [
+            {
+              name: '国家贡献度',
+              type: 'map',
+              map: 'world',
+              roam: true,
+              label: {
+                show: false
+              },
+              emphasis: {
+                label: {
+                  show: true,
+                },
+                itemStyle: {
+                  areaColor: '#fef08a',
+                },
+              },
+              data: mapData,
+              // 自定义名称映射（英文到中文）
+              nameMap: countryNameMap,
+            },
+          ],
+        };
+
+        chart.setOption(option);
+      })
+      .catch(error => {
+        console.error('加载地图数据失败:', error);
+        chart.hideLoading();
+      });
+
+    const handleResize = () => {
+      chart.resize();
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      chart.dispose();
+    };
+  }, [data]);
+
+  return <div ref={chartRef} style={{ width: '100%', height: '300px' }} />;
 }
 
 export default function ProjectDetail({ projectName, onBack }: { projectName: string; onBack: () => void }) {
@@ -581,6 +788,56 @@ export default function ProjectDetail({ projectName, onBack }: { projectName: st
           </tbody>
         </table>
       </div>
+
+      {/* 第5部分：贡献度分布（近一年） */}
+      {data && data.countryDistribution && data.countryDistribution.length > 0 && (
+      <div className={styles.countryDistributionSection}>
+        <h2 className={styles.sectionTitle}>贡献度分布（近一年）</h2>
+        <div className={styles.countryDistributionContent}>
+          {/* 左边：贡献度分布TOP10列表 */}
+          <div className={styles.countryDistributionList}>
+            <table className={styles.countryTable}>
+              <thead>
+                <tr>
+                  <th>排名</th>
+                  <th>国家</th>
+                  <th>开发者</th>
+                  <th>OpenRank</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.countryDistribution.map((item) => (
+                  <tr key={item.rank}>
+                    <td>
+                      <span className={clsx(styles.countryRankBadge, {
+                        [styles.countryRankBadge1]: item.rank === 1,
+                        [styles.countryRankBadge2]: item.rank === 2,
+                        [styles.countryRankBadge3]: item.rank === 3,
+                      })}>
+                        {item.rank}
+                      </span>
+                    </td>
+                    <td>
+                      <div className={styles.countryInfo}>
+                        <span className={styles.countryFlag}>{item.flag}</span>
+                        <span className={styles.countryName}>{item.country}</span>
+                      </div>
+                    </td>
+                    <td className={styles.countryPercentage}>{item.percentage}%</td>
+                    <td className={styles.countryOpenrank}>{(item.openrank ?? 0).toLocaleString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* 右边：地图分布 */}
+          <div className={styles.countryMapContainer}>
+            <CountryMapChart data={data.countryDistribution} />
+          </div>
+        </div>
+      </div>
+      )}
     </div>
   );
 }
