@@ -37,21 +37,17 @@ const RANK_BADGES: { [key: number]: string } = {
 };
 
 const MOCK_LEADERBOARD_DATA: LeaderboardItem[] = [
-  { rank: 1, prevRank: 1, name: "TensorFlow", logo: "https://www.gstatic.com/images/branding/product/2x/tensorflow_2020q4_48dp.png", description: "An end-to-end open source machine learning platform", org: "Google", country: "US", participants: 3250, prevParticipants: 3100, openrank: 1, prevOpenrank: 2, activity: 98, openness: 95, impact: 99, totalScore: 97.5 },
-  { rank: 2, prevRank: 3, name: "PyTorch", logo: "https://pytorch.org/assets/images/pytorch-logo.png", description: "An open source machine learning framework", org: "Meta", country: "US", participants: 2800, prevParticipants: 2650, openrank: 2, prevOpenrank: 1, activity: 96, openness: 92, impact: 98, totalScore: 95.2 },
-  { rank: 3, prevRank: 2, name: "Transformers", logo: "https://huggingface.co/front/assets/huggingface_logo.svg", description: "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow", org: "Hugging Face", country: "US", participants: 2100, prevParticipants: 1950, openrank: 3, prevOpenrank: 3, activity: 94, openness: 98, impact: 95, totalScore: 95.0 },
-  { rank: 4, prevRank: 4, name: "Kubernetes", logo: "https://kubernetes.io/images/kubernetes-horizontal-color.png", description: "Container Orchestration", org: "CNCF", country: "US", participants: 3500, prevParticipants: 3400, openrank: 4, prevOpenrank: 5, activity: 95, openness: 90, impact: 96, totalScore: 93.8 },
-  { rank: 5, prevRank: 7, name: "React", logo: "https://react.dev/images/logo.svg", description: "The library for web and native user interfaces", org: "Meta", country: "US", participants: 2900, prevParticipants: 2700, openrank: 5, prevOpenrank: 4, activity: 93, openness: 88, impact: 97, totalScore: 92.5 },
-  { rank: 6, prevRank: 5, name: "Vue", logo: "https://vuejs.org/logo.svg", description: "The Progressive JavaScript Framework", org: "Vue Team", country: "CN", participants: 1800, prevParticipants: 1850, openrank: 8, prevOpenrank: 6, activity: 90, openness: 95, impact: 91, totalScore: 91.2 },
-  { rank: 7, prevRank: 6, name: "Ansible", logo: "https://www.ansible.com/favicon.ico", description: "Simple IT automation", org: "Red Hat", country: "US", participants: 1500, prevParticipants: 1520, openrank: 7, prevOpenrank: 7, activity: 88, openness: 92, impact: 88, totalScore: 89.5 },
-  { rank: 8, prevRank: 10, name: "Istio", logo: "https://istio.io/favicons/android-chrome-192x192.png", description: "Connect, secure, control, and observe services", org: "CNCF", country: "US", participants: 1200, prevParticipants: 1100, openrank: 6, prevOpenrank: 9, activity: 85, openness: 94, impact: 86, totalScore: 88.2 },
-  { rank: 9, prevRank: 8, name: "Apache Dubbo", logo: "https://dubbo.apache.org/img/favicon.ico", description: "A high-performance, java based, RPC framework", org: "Apache", country: "CN", participants: 980, prevParticipants: 1000, openrank: 10, prevOpenrank: 8, activity: 82, openness: 90, impact: 84, totalScore: 85.5 },
-  { rank: 10, prevRank: 9, name: "Ant Design", logo: "https://gw.alipayobjects.com/zos/basement_prod/4e818234-1b2a-4cca-857f-1529c3859a2f.svg", description: "An enterprise-class UI design language", org: "Ant Group", country: "CN", participants: 1650, prevParticipants: 1680, openrank: 9, prevOpenrank: 10, activity: 86, openness: 88, impact: 82, totalScore: 85.0 },
-  { rank: 11, prevRank: 12, name: "Flink", logo: "https://flink.apache.org/img/favicon.ico", description: "Distributed stream processing framework", org: "Apache", country: "CN", participants: 1100, prevParticipants: 1050, openrank: 12, prevOpenrank: 11, activity: 84, openness: 89, impact: 80, totalScore: 84.2 },
-  { rank: 12, prevRank: 11, name: "RocketMQ", logo: "https://rocketmq.apache.org/assets/favicon.ico", description: "Distributed messaging and streaming platform", org: "Apache", country: "CN", participants: 950, prevParticipants: 980, openrank: 11, prevOpenrank: 12, activity: 80, openness: 91, impact: 78, totalScore: 83.0 },
-  { rank: 13, prevRank: 15, name: "Spring Boot", logo: "https://spring.io/favicon.ico", description: "Creating stand-alone, production-grade Spring applications", org: "VMware", country: "US", participants: 2200, prevParticipants: 2000, openrank: 13, prevOpenrank: 14, activity: 87, openness: 80, impact: 85, totalScore: 82.8 },
-  { rank: 14, prevRank: 13, name: ".NET", logo: "https:// dotnet.microsoft.com/favicon.ico", description: "Development platform for building many types of applications", org: "Microsoft", country: "US", participants: 2000, prevParticipants: 2050, openrank: 14, prevOpenrank: 13, activity: 85, openness: 78, impact: 84, totalScore: 81.5 },
-  { rank: 15, prevRank: 14, name: "Seata", logo: "https://seata.io/img/favicon.ico", description: "Distributed transaction solution", org: "Apache", country: "CN", participants: 780, prevParticipants: 800, openrank: 15, prevOpenrank: 15, activity: 76, openness: 87, impact: 74, totalScore: 78.8 },
+  { rank: 1, prevRank: 1, name: "mosn/layotto", logo: "https://www.gstatic.com/images/branding/product/2x/tensorflow_2020q4_48dp.png", description: "An end-to-end open source machine learning platform", org: "Google", country: "US", participants: 3250, prevParticipants: 3100, openrank: 1, prevOpenrank: 2, activity: 98, openness: 95, impact: 99, totalScore: 97.5 },
+  { rank: 2, prevRank: 3, name: "pytorch/pytorch", logo: "https://pytorch.org/assets/images/pytorch-logo.png", description: "An open source machine learning framework", org: "Meta", country: "US", participants: 2800, prevParticipants: 2650, openrank: 2, prevOpenrank: 1, activity: 96, openness: 92, impact: 98, totalScore: 95.2 },
+  { rank: 3, prevRank: 2, name: "tensorflow/tensorflow", logo: "https://huggingface.co/front/assets/huggingface_logo.svg", description: "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow", org: "Hugging Face", country: "US", participants: 2100, prevParticipants: 1950, openrank: 3, prevOpenrank: 3, activity: 94, openness: 98, impact: 95, totalScore: 95.0 },
+  { rank: 4, prevRank: 2, name: "tensorflow/tensorflow", logo: "https://huggingface.co/front/assets/huggingface_logo.svg", description: "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow", org: "Hugging Face", country: "US", participants: 2100, prevParticipants: 1950, openrank: 3, prevOpenrank: 3, activity: 94, openness: 98, impact: 95, totalScore: 95.0 },
+  { rank: 5, prevRank: 2, name: "tensorflow/tensorflow", logo: "https://huggingface.co/front/assets/huggingface_logo.svg", description: "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow", org: "Hugging Face", country: "US", participants: 2100, prevParticipants: 1950, openrank: 3, prevOpenrank: 3, activity: 94, openness: 98, impact: 95, totalScore: 95.0 },
+  { rank: 6, prevRank: 2, name: "tensorflow/tensorflow", logo: "https://huggingface.co/front/assets/huggingface_logo.svg", description: "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow", org: "Hugging Face", country: "US", participants: 2100, prevParticipants: 1950, openrank: 3, prevOpenrank: 3, activity: 94, openness: 98, impact: 95, totalScore: 95.0 },
+  { rank: 7, prevRank: 2, name: "tensorflow/tensorflow", logo: "https://huggingface.co/front/assets/huggingface_logo.svg", description: "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow", org: "Hugging Face", country: "US", participants: 2100, prevParticipants: 1950, openrank: 3, prevOpenrank: 3, activity: 94, openness: 98, impact: 95, totalScore: 95.0 },
+  { rank: 8, prevRank: 2, name: "tensorflow/tensorflow", logo: "https://huggingface.co/front/assets/huggingface_logo.svg", description: "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow", org: "Hugging Face", country: "US", participants: 2100, prevParticipants: 1950, openrank: 3, prevOpenrank: 3, activity: 94, openness: 98, impact: 95, totalScore: 95.0 },
+  { rank: 9, prevRank: 2, name: "tensorflow/tensorflow", logo: "https://huggingface.co/front/assets/huggingface_logo.svg", description: "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow", org: "Hugging Face", country: "US", participants: 2100, prevParticipants: 1950, openrank: 3, prevOpenrank: 3, activity: 94, openness: 98, impact: 95, totalScore: 95.0 },
+  { rank: 10, prevRank: 2, name: "tensorflow/tensorflow", logo: "https://huggingface.co/front/assets/huggingface_logo.svg", description: "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow", org: "Hugging Face", country: "US", participants: 2100, prevParticipants: 1950, openrank: 3, prevOpenrank: 3, activity: 94, openness: 98, impact: 95, totalScore: 95.0 },
+  { rank: 11, prevRank: 2, name: "tensorflow/tensorflow", logo: "https://huggingface.co/front/assets/huggingface_logo.svg", description: "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow", org: "Hugging Face", country: "US", participants: 2100, prevParticipants: 1950, openrank: 3, prevOpenrank: 3, activity: 94, openness: 98, impact: 95, totalScore: 95.0 },
 ];
 
 // Helper function for rank change indicators
@@ -243,16 +239,16 @@ export default function Leaderboard() {
       <div className={styles.leaderboardTable}>
           {/* 表头 */}
           <div className={styles.leaderboardHeader}>
-            <div className={styles.headerCell} style={{ width: "80px" }} onClick={() => handleSort("rank")}>
+            <div className={styles.headerCell} style={{ width: "100px" }} onClick={() => handleSort("rank")}>
               排名 <SortIcon column="rank" />
             </div>
-            <div className={styles.headerCellProject}  style={{ width: "850px" }} onClick={() => handleSort("name")}>
+            <div className={styles.headerCellProject}  style={{ width: "800px" }} onClick={() => handleSort("name")}>
               项目 <SortIcon column="name" />
             </div>
-            <div className={styles.headerCell} style={{ width: "120px" }} onClick={() => handleSort("openrank")}>
+            <div className={styles.headerCellRank} style={{ width: "150px" }} onClick={() => handleSort("openrank")}>
               OpenRank <SortIcon column="openrank" />
             </div>
-            <div className={styles.headerCell} style={{ width: "120px" }} onClick={() => handleSort("participants")}>
+            <div className={styles.headerCell} style={{ width: "150px" }} onClick={() => handleSort("participants")}>
               参与者数量 <SortIcon column="participants" />
             </div>
           </div>
