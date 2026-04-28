@@ -207,6 +207,16 @@ function getMockProjectData(projectName: string): ProjectDetailData {
         { rank: 8, country: "日本", countryCode: "JP", flag: "🇯🇵", openrank: 1850, percentage: 2.6 },
         { rank: 9, country: "韩国", countryCode: "KR", flag: "🇰🇷", openrank: 1230, percentage: 1.7 },
         { rank: 10, country: "巴西", countryCode: "BR", flag: "🇧🇷", openrank: 850, percentage: 1.2 },
+        { rank: 11, country: "澳大利亚", countryCode: "AU", flag: "🇦🇺", openrank: 720, percentage: 1.0 },
+        { rank: 12, country: "俄罗斯", countryCode: "RU", flag: "🇷🇺", openrank: 580, percentage: 0.8 },
+        { rank: 13, country: "荷兰", countryCode: "NL", flag: "🇳🇱", openrank: 450, percentage: 0.6 },
+        { rank: 14, country: "新加坡", countryCode: "SG", flag: "🇸🇬", openrank: 380, percentage: 0.5 },
+        { rank: 15, country: "瑞士", countryCode: "CH", flag: "🇨🇭", openrank: 320, percentage: 0.4 },
+        { rank: 16, country: "意大利", countryCode: "IT", flag: "🇮🇹", openrank: 280, percentage: 0.4 },
+        { rank: 17, country: "西班牙", countryCode: "ES", flag: "🇪🇸", openrank: 240, percentage: 0.3 },
+        { rank: 18, country: "墨西哥", countryCode: "MX", flag: "🇲🇽", openrank: 195, percentage: 0.3 },
+        { rank: 19, country: "印度尼西亚", countryCode: "ID", flag: "🇮🇩", openrank: 160, percentage: 0.2 },
+        { rank: 20, country: "土耳其", countryCode: "TR", flag: "🇹🇷", openrank: 135, percentage: 0.2 },
       ],
     },
     "PyTorch": {
@@ -254,6 +264,16 @@ function getMockProjectData(projectName: string): ProjectDetailData {
         { rank: 8, country: "日本", countryCode: "JP", flag: "🇯🇵", openrank: 1650, percentage: 2.5 },
         { rank: 9, country: "韩国", countryCode: "KR", flag: "🇰🇷", openrank: 980, percentage: 1.5 },
         { rank: 10, country: "澳大利亚", countryCode: "AU", flag: "🇦🇺", openrank: 710, percentage: 1.1 },
+        { rank: 11, country: "巴西", countryCode: "BR", flag: "🇧🇷", openrank: 580, percentage: 0.9 },
+        { rank: 12, country: "俄罗斯", countryCode: "RU", flag: "🇷🇺", openrank: 450, percentage: 0.7 },
+        { rank: 13, country: "荷兰", countryCode: "NL", flag: "🇳🇱", openrank: 380, percentage: 0.6 },
+        { rank: 14, country: "新加坡", countryCode: "SG", flag: "🇸🇬", openrank: 320, percentage: 0.5 },
+        { rank: 15, country: "瑞士", countryCode: "CH", flag: "🇨🇭", openrank: 265, percentage: 0.4 },
+        { rank: 16, country: "意大利", countryCode: "IT", flag: "🇮🇹", openrank: 220, percentage: 0.3 },
+        { rank: 17, country: "西班牙", countryCode: "ES", flag: "🇪🇸", openrank: 185, percentage: 0.3 },
+        { rank: 18, country: "墨西哥", countryCode: "MX", flag: "🇲🇽", openrank: 150, percentage: 0.2 },
+        { rank: 19, country: "印度尼西亚", countryCode: "ID", flag: "🇮🇩", openrank: 125, percentage: 0.2 },
+        { rank: 20, country: "土耳其", countryCode: "TR", flag: "🇹🇷", openrank: 95, percentage: 0.1 },
       ],
     },
   };
@@ -306,6 +326,16 @@ function getMockProjectData(projectName: string): ProjectDetailData {
       { rank: 8, country: "日本", countryCode: "JP", flag: "🇯🇵", openrank: 1500, percentage: 3.8 },
       { rank: 9, country: "韩国", countryCode: "KR", flag: "🇰🇷", openrank: 1200, percentage: 3.0 },
       { rank: 10, country: "巴西", countryCode: "BR", flag: "🇧🇷", openrank: 1000, percentage: 2.5 },
+      { rank: 11, country: "澳大利亚", countryCode: "AU", flag: "🇦🇺", openrank: 850, percentage: 2.1 },
+      { rank: 12, country: "俄罗斯", countryCode: "RU", flag: "🇷🇺", openrank: 680, percentage: 1.7 },
+      { rank: 13, country: "荷兰", countryCode: "NL", flag: "🇳🇱", openrank: 520, percentage: 1.3 },
+      { rank: 14, country: "新加坡", countryCode: "SG", flag: "🇸🇬", openrank: 450, percentage: 1.1 },
+      { rank: 15, country: "瑞士", countryCode: "CH", flag: "🇨🇭", openrank: 380, percentage: 1.0 },
+      { rank: 16, country: "意大利", countryCode: "IT", flag: "🇮🇹", openrank: 320, percentage: 0.8 },
+      { rank: 17, country: "西班牙", countryCode: "ES", flag: "🇪🇸", openrank: 265, percentage: 0.7 },
+      { rank: 18, country: "墨西哥", countryCode: "MX", flag: "🇲🇽", openrank: 220, percentage: 0.6 },
+      { rank: 19, country: "印度尼西亚", countryCode: "ID", flag: "🇮🇩", openrank: 175, percentage: 0.4 },
+      { rank: 20, country: "土耳其", countryCode: "TR", flag: "🇹🇷", openrank: 145, percentage: 0.4 },
     ],
   };
 }
@@ -527,7 +557,7 @@ function CountryMapChart({ data }: { data: ProjectDetailData['countryDistributio
     };
   }, [data]);
 
-  return <div ref={chartRef} style={{ width: '100%', height: '300px' }} />;
+  return <div ref={chartRef} style={{ width: '100%', height: '280px' }} />;
 }
 
 export default function ProjectDetail({ projectName, onBack }: { projectName: string; onBack: () => void }) {

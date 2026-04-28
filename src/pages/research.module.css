@@ -1754,10 +1754,13 @@ h2.heroTitle {
 .countryDistributionContent {
   display: flex;
   gap: 24px;
+  align-items: stretch;
 }
 
 .countryDistributionList {
-  flex: 0 0 50%;
+  flex: 0 0 38%;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .countryTable {
@@ -1769,9 +1772,15 @@ h2.heroTitle {
   overflow: hidden;
 }
 
+.countryTable thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
 .countryTable th {
   background: #f8f9fa;
-  padding: 16px 20px;
+  padding: 12px 20px;
   text-align: left;
   font-family: Montserrat-Medium, Arial, sans-serif;
   font-size: 13px;
@@ -1781,9 +1790,9 @@ h2.heroTitle {
 }
 
 .countryTable td {
-  padding: 14px 20px;
+  padding: 6px 20px;
   font-family: Montserrat-Regular, Arial, sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   color: #17191c;
   border-bottom: 1px solid #e5e7eb;
 }
