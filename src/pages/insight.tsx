@@ -126,7 +126,7 @@ export default function Insight(): ReactNode {
         <div className={styles.leaderboardIframe}>
           <iframe
             ref={iframeRef}
-            src="/Leaderboard"
+            src="/inclusionAI.github.io/Leaderboard"
             title="Leaderboard"
             width="100%"
             height={iframeHeight}
