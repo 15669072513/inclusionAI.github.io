@@ -188,20 +188,25 @@ const countryCodeMap: { [key: string]: string } = {
 // 获取项目详情数据
 async function fetchProjectData(projectId: string): Promise<ProjectDetailData | null> {
   try {
+    // 项目ID：直接从id获取，格式如 :companies/nvidia/dynamo
+    // OSS路径使用projectId，格式如 :companies/nvidia/dynamo
     const projectName = extractProjectName(projectId);
     console.log("Fetching project data for:", projectId, "->", projectName);
     
+    // 使用新的API路径格式：${OSS_BASE_URL}/${projectId}/
+    const basePath = `${OSS_BASE_URL}/${projectId}`;
+    
     // 获取项目meta信息
-    const metaUrl = `${OSS_BASE_URL}/projects/${projectName}/meta.json`;
+    const metaUrl = `${basePath}/meta.json`;
     console.log("Fetching meta from:", metaUrl);
     
     const [metaResponse, openrankResponse, activityResponse, participantsResponse, issuesResponse, contributorsResponse] = await Promise.all([
       fetch(metaUrl).then(r => r.ok ? r.json() : Promise.resolve(null)).catch(() => null),
-      fetch(`${OSS_BASE_URL}/projects/${projectName}/openrank.json`).then(r => r.ok ? r.json() : ({} as any)).catch(() => ({})),
-      fetch(`${OSS_BASE_URL}/projects/${projectName}/activity.json`).then(r => r.ok ? r.json() : ({} as any)).catch(() => ({})),
-      fetch(`${OSS_BASE_URL}/projects/${projectName}/participants.json`).then(r => r.ok ? r.json() : ({} as any)).catch(() => ({})),
-      fetch(`${OSS_BASE_URL}/projects/${projectName}/issues_and_change_request_active.json`).then(r => r.ok ? r.json() : ({} as any)).catch(() => ({})),
-      fetch(`${OSS_BASE_URL}/projects/${projectName}/community_openrank_details.json`).then(r => r.ok ? r.json() : ({} as any)).catch(() => ({})),
+      fetch(`${basePath}/openrank.json`).then(r => r.ok ? r.json() : ({} as any)).catch(() => ({})),
+      fetch(`${basePath}/activity.json`).then(r => r.ok ? r.json() : ({} as any)).catch(() => ({})),
+      fetch(`${basePath}/participants.json`).then(r => r.ok ? r.json() : ({} as any)).catch(() => ({})),
+      fetch(`${basePath}/issues_and_change_request_active.json`).then(r => r.ok ? r.json() : ({} as any)).catch(() => ({})),
+      fetch(`${basePath}/community_openrank_details.json`).then(r => r.ok ? r.json() : ({} as any)).catch(() => ({})),
     ]);
     
     console.log("Meta data:", metaResponse);
@@ -305,7 +310,7 @@ async function fetchProjectData(projectId: string): Promise<ProjectDetailData | 
       id: projectId,
       name: projectMeta.name || projectName,
       name_zh: projectMeta.name_zh || projectMeta.name || projectName,
-      logo: `${OSS_BASE_URL}/logos/${projectName}.png`,
+      logo: `${OSS_BASE_URL}/${projectId}/logo.png`,
       description: projectMeta.description || '',
       description_zh: projectMeta.description_zh || projectMeta.description || '',
       tags,
@@ -331,7 +336,7 @@ async function fetchProjectData(projectId: string): Promise<ProjectDetailData | 
   }
 }
 
-export default function ProjectDetail({ projectName, onBack }: { projectName: string; onBack: () => void }) {
+export default function ProjectDetail({ projectName, projectAvatar, onBack }: { projectName: string; projectAvatar?: string; onBack: () => void }) {
 
   // 排名变化指示器
   function ChangeIndicator({ current, previous }: { current: number; previous: number }) {
@@ -579,6 +584,7 @@ export default function ProjectDetail({ projectName, onBack }: { projectName: st
   const [selectedYear, setSelectedYear] = useState("2026");
   const [selectedMonth, setSelectedMonth] = useState("03");
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
+  const [selectedUserAvatar, setSelectedUserAvatar] = useState<string>('');
   const [contributors, setContributors] = useState<ProjectDetailData['contributors']>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [allContributors, setAllContributors] = useState<ProjectDetailData['contributors']>([]);
@@ -725,8 +731,9 @@ export default function ProjectDetail({ projectName, onBack }: { projectName: st
     onBack();
   };
 
-  const handleUserClick = (userName: string) => {
+  const handleUserClick = (userName: string, userAvatar: string) => {
     setSelectedUser(userName);
+    setSelectedUserAvatar(userAvatar);
   };
 
   const handleUserBack = () => {
@@ -735,7 +742,7 @@ export default function ProjectDetail({ projectName, onBack }: { projectName: st
 
   // 渲染用户详情
   if (selectedUser) {
-    return <UserDetail userName={selectedUser} onBack={handleUserBack} />;
+    return <UserDetail userName={selectedUser} userAvatar={selectedUserAvatar} onBack={handleUserBack} />;
   }
 
   if (loading) {
@@ -766,7 +773,7 @@ export default function ProjectDetail({ projectName, onBack }: { projectName: st
       {/* 第1部分：项目简介 */}
       <div className={styles.projectIntroSection}>
         <div className={styles.projectIntroLeft}>
-          <img src={data.logo} alt={data.name} className={styles.projectIntroLogo} />
+          <img src={projectAvatar || data.logo} alt={data.name} className={styles.projectIntroLogo} />
         </div>
         <div className={styles.projectIntroRight}>
           <div className={styles.projectTitleRow}>
@@ -959,7 +966,7 @@ export default function ProjectDetail({ projectName, onBack }: { projectName: st
                   <td>
                     <button
                         className={styles.userDashboardButton}
-                        onClick={() => handleUserClick(contributor.name)}
+                        onClick={() => handleUserClick(contributor.name, contributor.avatar)}
                     >
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>

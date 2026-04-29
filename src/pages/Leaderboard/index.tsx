@@ -118,6 +118,7 @@ export default function Leaderboard() {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
+  const [selectedProjectAvatar, setSelectedProjectAvatar] = useState<string>('');
   const [leaderboardData, setLeaderboardData] = useState<LeaderboardItem[]>([]);
   const [loading, setLoading] = useState(true);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -203,9 +204,9 @@ export default function Leaderboard() {
 
   // 处理项目点击，传递完整项目信息
   const handleProjectClick = (item: LeaderboardItem) => {
-    // 从 id 中提取项目名，例如 ":companies/nvidia/dynamo" -> "dynamo"
-    const projectId = item.id;
-    setSelectedProject(projectId);
+    // 使用完整的项目 id
+    setSelectedProject(item.id.replace(":",""));
+    setSelectedProjectAvatar(item.avatar || '');
   };
 
   // 加载状态
@@ -221,8 +222,12 @@ export default function Leaderboard() {
     <div className={styles.leaderboard} ref={contentRef}>
       {selectedProject ? (
         <ProjectDetail 
-          projectName={selectedProject} 
-          onBack={() => setSelectedProject(null)} 
+          projectName={selectedProject}
+          projectAvatar={selectedProjectAvatar}
+          onBack={() => {
+            setSelectedProject(null);
+            setSelectedProjectAvatar('');
+          }} 
         />
       ) : (
         <>
