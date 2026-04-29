@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect, useRef } from "react";
-import { DatePicker, ConfigProvider } from 'antd';
+import { DatePicker, ConfigProvider, Spin } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import dayjs from "dayjs";
 import "dayjs/locale/zh-cn";
@@ -10,23 +10,24 @@ import ProjectDetail from "./ProjectDetail";
 // 设置 Day.js 使用中文
 dayjs.locale("zh-cn");
 
-// Mock data for Leaderboard
+// API 基础 URL
+const API_BASE_URL = "https://selfoss.open-digger.cn";
+
+// 项目列表数据接口
 interface LeaderboardItem {
   rank: number;
-  prevRank: number; // 上期排名
+  prevRank: number;
+  id: string;
+  platform: string;
+  avatar: string;
   name: string;
-  logo: string;
+  name_zh: string;
   description: string;
-  org: string;
-  country: string;
-  participants: number;
-  prevParticipants: number; // 上期参与者数量
+  description_zh: string;
   openrank: number;
-  prevOpenrank: number; // 上期OpenRank排名
-  activity: number;
-  openness: number;
-  impact: number;
-  totalScore: number;
+  openrankDelta: number;
+  participants: number;
+  participantsDelta: number;
 }
 
 // Rank badges for top 3
@@ -35,20 +36,6 @@ const RANK_BADGES: { [key: number]: string } = {
   2: "🥈",
   3: "🥉",
 };
-
-const MOCK_LEADERBOARD_DATA: LeaderboardItem[] = [
-  { rank: 1, prevRank: 1, name: "mosn/layotto", logo: "https://www.gstatic.com/images/branding/product/2x/tensorflow_2020q4_48dp.png", description: "An end-to-end open source machine learning platform", org: "Google", country: "US", participants: 3250, prevParticipants: 3100, openrank: 1, prevOpenrank: 2, activity: 98, openness: 95, impact: 99, totalScore: 97.5 },
-  { rank: 2, prevRank: 3, name: "pytorch/pytorch", logo: "https://pytorch.org/assets/images/pytorch-logo.png", description: "An open source machine learning framework", org: "Meta", country: "US", participants: 2800, prevParticipants: 2650, openrank: 2, prevOpenrank: 1, activity: 96, openness: 92, impact: 98, totalScore: 95.2 },
-  { rank: 3, prevRank: 2, name: "tensorflow/tensorflow", logo: "https://huggingface.co/front/assets/huggingface_logo.svg", description: "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow", org: "Hugging Face", country: "US", participants: 2100, prevParticipants: 1950, openrank: 3, prevOpenrank: 3, activity: 94, openness: 98, impact: 95, totalScore: 95.0 },
-  { rank: 4, prevRank: 2, name: "tensorflow/tensorflow", logo: "https://huggingface.co/front/assets/huggingface_logo.svg", description: "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow", org: "Hugging Face", country: "US", participants: 2100, prevParticipants: 1950, openrank: 3, prevOpenrank: 3, activity: 94, openness: 98, impact: 95, totalScore: 95.0 },
-  { rank: 5, prevRank: 2, name: "tensorflow/tensorflow", logo: "https://huggingface.co/front/assets/huggingface_logo.svg", description: "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow", org: "Hugging Face", country: "US", participants: 2100, prevParticipants: 1950, openrank: 3, prevOpenrank: 3, activity: 94, openness: 98, impact: 95, totalScore: 95.0 },
-  { rank: 6, prevRank: 2, name: "tensorflow/tensorflow", logo: "https://huggingface.co/front/assets/huggingface_logo.svg", description: "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow", org: "Hugging Face", country: "US", participants: 2100, prevParticipants: 1950, openrank: 3, prevOpenrank: 3, activity: 94, openness: 98, impact: 95, totalScore: 95.0 },
-  { rank: 7, prevRank: 2, name: "tensorflow/tensorflow", logo: "https://huggingface.co/front/assets/huggingface_logo.svg", description: "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow", org: "Hugging Face", country: "US", participants: 2100, prevParticipants: 1950, openrank: 3, prevOpenrank: 3, activity: 94, openness: 98, impact: 95, totalScore: 95.0 },
-  { rank: 8, prevRank: 2, name: "tensorflow/tensorflow", logo: "https://huggingface.co/front/assets/huggingface_logo.svg", description: "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow", org: "Hugging Face", country: "US", participants: 2100, prevParticipants: 1950, openrank: 3, prevOpenrank: 3, activity: 94, openness: 98, impact: 95, totalScore: 95.0 },
-  { rank: 9, prevRank: 2, name: "tensorflow/tensorflow", logo: "https://huggingface.co/front/assets/huggingface_logo.svg", description: "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow", org: "Hugging Face", country: "US", participants: 2100, prevParticipants: 1950, openrank: 3, prevOpenrank: 3, activity: 94, openness: 98, impact: 95, totalScore: 95.0 },
-  { rank: 10, prevRank: 2, name: "tensorflow/tensorflow", logo: "https://huggingface.co/front/assets/huggingface_logo.svg", description: "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow", org: "Hugging Face", country: "US", participants: 2100, prevParticipants: 1950, openrank: 3, prevOpenrank: 3, activity: 94, openness: 98, impact: 95, totalScore: 95.0 },
-  { rank: 11, prevRank: 2, name: "tensorflow/tensorflow", logo: "https://huggingface.co/front/assets/huggingface_logo.svg", description: "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow", org: "Hugging Face", country: "US", participants: 2100, prevParticipants: 1950, openrank: 3, prevOpenrank: 3, activity: 94, openness: 98, impact: 95, totalScore: 95.0 },
-];
 
 // Helper function for rank change indicators
 function RankChange({ current, previous }: { current: number; previous: number }) {
@@ -82,17 +69,71 @@ function ParticipantChange({ current, previous }: { current: number; previous: n
   );
 }
 
+// 获取项目列表数据
+async function fetchLeaderboardData(timeType: "month" | "year", year: string, month: string): Promise<LeaderboardItem[]> {
+  try {
+    const dateStr = timeType === "month" ? `${year}${parseInt(month)}` : year;
+    const url = `${API_BASE_URL}/open_leaderboard/agentic%20ai/project/${timeType}/${dateStr}/data.json`;
+    console.log("Fetching leaderboard from:", url);
+    
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const json = await response.json();
+    const data = json.data || json;
+    console.log("Leaderboard data:", data);
+    
+    return (Array.isArray(data) ? data : []).map((item: any, index: number) => ({
+      rank: item.rank || index + 1,
+      prevRank: item.rank + (item.rankDelta || 0),
+      id: item.id || "",
+      platform: item.platform || "All",
+      avatar: item.avatar || "",
+      name: item.name || "",
+      name_zh: item.name_zh || item.name || "",
+      description: item.description || "",
+      description_zh: item.description_zh || item.description || "",
+      openrank: item.openrank || 0,
+      openrankDelta: item.openrankDelta || 0,
+      participants: item.participants || 0,
+      participantsDelta: item.participantsDelta || 0,
+    }));
+  } catch (error) {
+    console.error("Failed to fetch leaderboard data:", error);
+    return [];
+  }
+}
+
 export default function Leaderboard() {
+  // 获取上一个月的时间
+  const lastMonth = dayjs().subtract(1, 'month');
+  
   const [timeRangeType, setTimeRangeType] = useState<"month" | "year">("month");
-  const [selectedYear, setSelectedYear] = useState("2026");
-  const [selectedMonth, setSelectedMonth] = useState("04");
+  const [selectedYear, setSelectedYear] = useState(lastMonth.format("YYYY"));
+  const [selectedMonth, setSelectedMonth] = useState(lastMonth.format("MM"));
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<keyof LeaderboardItem>("rank");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
+  const [leaderboardData, setLeaderboardData] = useState<LeaderboardItem[]>([]);
+  const [loading, setLoading] = useState(true);
   const contentRef = useRef<HTMLDivElement>(null);
   const pageSize = 10;
+
+  // 获取数据
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      const data = await fetchLeaderboardData(timeRangeType, selectedYear, selectedMonth);
+      setLeaderboardData(data);
+      setLoading(false);
+      setCurrentPage(1);
+    };
+    loadData();
+  }, [timeRangeType, selectedYear, selectedMonth]);
 
   // 发送高度给父页面
   useEffect(() => {
@@ -111,10 +152,10 @@ export default function Leaderboard() {
     }
 
     return () => observer.disconnect();
-  }, [selectedProject]);
+  }, [selectedProject, leaderboardData]);
 
   const filteredData = useMemo(() => {
-    return MOCK_LEADERBOARD_DATA.filter((item) => {
+    return leaderboardData.filter((item) => {
       // Search filter
       if (searchQuery && !item.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
           !item.description.toLowerCase().includes(searchQuery.toLowerCase())) {
@@ -122,7 +163,7 @@ export default function Leaderboard() {
       }
       return true;
     });
-  }, [searchQuery]);
+  }, [searchQuery, leaderboardData]);
 
   const sortedData = useMemo(() => {
     return [...filteredData].sort((a, b) => {
@@ -140,7 +181,7 @@ export default function Leaderboard() {
     return sortedData.slice(start, start + pageSize);
   }, [sortedData, currentPage]);
 
-  const totalPages = Math.ceil(sortedData.length / pageSize);
+  const totalPages = Math.max(1, Math.ceil(sortedData.length / pageSize));
 
   const handleSort = (column: keyof LeaderboardItem) => {
     if (sortBy === column) {
@@ -159,6 +200,22 @@ export default function Leaderboard() {
       </span>
     );
   };
+
+  // 处理项目点击，传递完整项目信息
+  const handleProjectClick = (item: LeaderboardItem) => {
+    // 从 id 中提取项目名，例如 ":companies/nvidia/dynamo" -> "dynamo"
+    const projectId = item.id;
+    setSelectedProject(projectId);
+  };
+
+  // 加载状态
+  if (loading) {
+    return (
+      <div className={styles.leaderboard} ref={contentRef} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
+        <Spin size="large" />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.leaderboard} ref={contentRef}>
@@ -253,6 +310,7 @@ export default function Leaderboard() {
             </div>
           </div>
 
+
           {/* 数据行 */}
           <div className={styles.leaderboardTbody}>
             {paginatedData.map((item) => (
@@ -269,25 +327,29 @@ export default function Leaderboard() {
                 </div>
                 <div className={styles.projectCellWrapper}>
                   <div className={styles.projectInfo}>
-                    <img src={item.logo} alt={item.name} className={styles.projectLogo} />
+                    <img src={item.avatar} alt={item.name} className={styles.projectLogo} />
                     <div className={styles.projectDetails}>
                       <span
                         className={styles.projectNameLink}
-                        onClick={() => setSelectedProject(item.name)}
+                        onClick={() => handleProjectClick(item)}
                       >
-                        {item.name}
+                        {item.name_zh || item.name}
                       </span>
-                      <span className={styles.projectDesc}>{item.description}</span>
+                      <span className={styles.projectDesc}>{item.description_zh || item.description}</span>
                     </div>
                   </div>
                 </div>
                 <div className={styles.openrankCell}>
-                  <span className={styles.openrankValue}>{item.openrank}</span>
-                  <RankChange current={item.openrank} previous={item.prevOpenrank} />
+                  <span className={styles.openrankValue}>{item.openrank?.toFixed(2) || '0.00'}</span>
+                  <span className={clsx(styles.rankChange, item.openrankDelta >= 0 ? styles.rankUp : styles.rankDown)}>
+                    {item.openrankDelta >= 0 ? "↑" : "↓"} {Math.abs(item.openrankDelta).toFixed(2)}
+                  </span>
                 </div>
                 <div className={styles.participantsCell}>
-                  <div className={styles.participantsValue}>{item.participants.toLocaleString()}</div>
-                  <ParticipantChange current={item.participants} previous={item.prevParticipants} />
+                  <div className={styles.participantsValue}>{item.participants?.toLocaleString() || 0}</div>
+                  <span className={clsx(styles.rankChange, item.participantsDelta >= 0 ? styles.rankUp : styles.rankDown)}>
+                    {item.participantsDelta >= 0 ? "↑" : "↓"} {Math.abs(item.participantsDelta).toLocaleString()}
+                  </span>
                 </div>
               </div>
             ))}
