@@ -12,6 +12,7 @@ dayjs.locale("zh-cn");
 
 // API 基础 URL
 const API_BASE_URL = "https://selfoss.open-digger.cn";
+const OSS_BASE_URL = "https://oss.open-digger.cn";
 
 // 项目列表数据接口
 interface LeaderboardItem {
@@ -69,6 +70,39 @@ function ParticipantChange({ current, previous }: { current: number; previous: n
   );
 }
 
+// 检查项目是否全部由GitHub托管
+async function checkProjectPlatforms(items: LeaderboardItem[]): Promise<LeaderboardItem[]> {
+  const filteredItems: LeaderboardItem[] = [];
+  
+  for (const item of items) {
+    try {
+      // 构建 meta URL（与 ProjectDetail 相同的路径格式）
+      const projectId = item.id.replace(":", "");
+      const metaUrl = `${OSS_BASE_URL}/${projectId}/meta.json`;
+      
+      const response = await fetch(metaUrl);
+      if (!response.ok) {
+        console.warn(`Failed to fetch meta for ${item.name}:`, response.status);
+        continue;
+      }
+      
+      const meta = await response.json();
+      const repos = meta?.repos || [];
+      
+      // 检查 repos 数组中是否全部都是 GitHub
+      const allGitHub = repos.every((repo: any) => repo.platform === "GitHub");
+      
+      if (allGitHub) {
+        filteredItems.push(item);
+      }
+    } catch (error) {
+      console.warn(`Error checking platform for ${item.name}:`, error);
+    }
+  }
+  
+  return filteredItems;
+}
+
 // 获取项目列表数据
 async function fetchLeaderboardData(timeType: "month" | "year", year: string, month: string): Promise<LeaderboardItem[]> {
   try {
@@ -85,7 +119,7 @@ async function fetchLeaderboardData(timeType: "month" | "year", year: string, mo
     const data = json.data || json;
     console.log("Leaderboard data:", data);
     
-    return (Array.isArray(data) ? data : []).map((item: any, index: number) => ({
+    const items = (Array.isArray(data) ? data : []).map((item: any, index: number) => ({
       rank: item.rank || index + 1,
       prevRank: item.rank + (item.rankDelta || 0),
       id: item.id || "",
@@ -99,6 +133,16 @@ async function fetchLeaderboardData(timeType: "month" | "year", year: string, mo
       openrankDelta: item.openrankDelta || 0,
       participants: item.participants || 0,
       participantsDelta: item.participantsDelta || 0,
+    }));
+    
+    // 筛选出 repos 全部为 GitHub 的项目
+    const filteredItems = await checkProjectPlatforms(items);
+    
+    // 重新计算排名
+    return filteredItems.map((item, index) => ({
+      ...item,
+      rank: index + 1,
+      prevRank: index + 1,
     }));
   } catch (error) {
     console.error("Failed to fetch leaderboard data:", error);

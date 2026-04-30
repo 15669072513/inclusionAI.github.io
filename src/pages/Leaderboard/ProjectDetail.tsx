@@ -186,7 +186,7 @@ const countryCodeMap: { [key: string]: string } = {
 };
 
 // 获取项目详情数据
-async function fetchProjectData(projectId: string): Promise<ProjectDetailData | null> {
+async function fetchProjectData(projectId: string, timeRangeType: "month" | "year" = "month"): Promise<ProjectDetailData | null> {
   try {
     // 项目ID：直接从id获取，格式如 :companies/nvidia/dynamo
     // OSS路径使用projectId，格式如 :companies/nvidia/dynamo
@@ -217,11 +217,30 @@ async function fetchProjectData(projectId: string): Promise<ProjectDetailData | 
     const projectMeta = metaResponse || {};
     const tags = projectMeta.labels?.map((l: any) => l.name_zh || l.name) || [];
     
-    // 处理历史数据
-    const openrankData = openrankResponse || {};
-    const activityData = activityResponse || {};
-    const participantsData = participantsResponse || {};
-    const issuesData = issuesResponse || {};
+    // 处理历史数据（根据时间范围类型过滤）
+    const filterByTimeRange = (data: Record<string, number>, type: "month" | "year"): Record<string, number> => {
+      const result: Record<string, number> = {};
+      for (const [key, value] of Object.entries(data)) {
+        if (type === "month") {
+          // 月度数据：只保留 yyyy-mm 格式的key
+          if (/^\d{4}-\d{2}$/.test(key)) {
+            result[key] = value;
+          }
+        } else {
+          // 年度数据：只保留 yyyy 格式的key
+          if (/^\d{4}$/.test(key)) {
+            result[key] = value;
+          }
+        }
+      }
+      return result;
+    };
+
+    // 按时间范围类型筛选历史数据
+    const openrankData = filterByTimeRange(openrankResponse || {}, timeRangeType);
+    const activityData = filterByTimeRange(activityResponse || {}, timeRangeType);
+    const participantsData = filterByTimeRange(participantsResponse || {}, timeRangeType);
+    const issuesData = filterByTimeRange(issuesResponse || {}, timeRangeType);
     
     // 获取当前日期（上个月）
     const now = dayjs();
@@ -377,7 +396,7 @@ export default function ProjectDetail({ projectName, projectAvatar, onBack }: { 
   }
 
   // 折线图组件
-  function LineChart({ data, color = "#22c55e", unit = "" }: { data: { date: string; value: number }[]; color?: string; unit?: string }) {
+  function LineChart({ data, color = "#22c55e", unit = "", timeRangeType = "month" }: { data: { date: string; value: number }[]; color?: string; unit?: string; timeRangeType?: "month" | "year" }) {
     if (!data || data.length === 0) return null;
 
     const values = data.map(d => d.value);
@@ -423,8 +442,23 @@ export default function ProjectDetail({ projectName, projectAvatar, onBack }: { 
       return `${x},${y}`;
     }).join(" ");
 
+    // Y轴刻度（3个点）
+    const yAxisTicks = [0, 50, 100];
+    const yAxisValues = yAxisTicks.map(tick => {
+      const value = minValue + ((100 - tick) / 100) * range;
+      return Math.round(value * 10) / 10;
+    });
+
     return (
       <div className={styles.lineChartContainer}>
+        {/* Y轴数值显示在图表左侧 */}
+        <div style={{ position: 'absolute', left: '8px', top: '0', bottom: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', pointerEvents: 'none' }}>
+          {yAxisValues.map((value, index) => (
+            <span key={index} style={{ fontSize: '10px', color: '#6b7280', lineHeight: '1' }}>
+              {value}
+            </span>
+          ))}
+        </div>
         <svg className={styles.lineChart} viewBox="0 0 100 100" preserveAspectRatio="none">
           <defs>
             <linearGradient id={`gradient-${color}`} x1="0%" y1="0%" x2="0%" y2="100%">
@@ -446,10 +480,14 @@ export default function ProjectDetail({ projectName, projectAvatar, onBack }: { 
             vectorEffect="non-scaling-stroke"
           />
         </svg>
+        {/* X轴刻度文字 - 只显示第一条和最后一条 */}
         <div className={styles.lineChartXAxis}>
-          {data.filter((_, i) => i % 3 === 0).map(item => (
-            <span key={item.date}>{item.date.slice(2)}</span>
-          ))}
+          {data.length > 0 && (
+            <>
+              <span>{data[0].date}</span>
+              {data.length > 1 && <span style={{ marginLeft: 'auto' }}>{data[data.length - 1].date}</span>}
+            </>
+          )}
         </div>
       </div>
     );
@@ -594,7 +632,7 @@ export default function ProjectDetail({ projectName, projectAvatar, onBack }: { 
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
-      const projectData = await fetchProjectData(projectName);
+      const projectData = await fetchProjectData(projectName, timeRangeType);
       setData(projectData);
       setLoading(false);
       
@@ -658,7 +696,7 @@ export default function ProjectDetail({ projectName, projectAvatar, onBack }: { 
     if (projectName) {
       loadData();
     }
-  }, [projectName]);
+  }, [projectName, timeRangeType]);
 
   // 当选择的日期变化时，更新贡献者数据
   useEffect(() => {
@@ -880,19 +918,19 @@ export default function ProjectDetail({ projectName, projectAvatar, onBack }: { 
         <div className={styles.chartsGrid}>
           <div className={styles.chartCard}>
             <div className={styles.chartTitle}>OpenRank 影响力历史趋势</div>
-            <LineChart data={data.openrankHistory} color="#22c55e"/>
+            <LineChart data={data.openrankHistory} color="#22c55e" timeRangeType={timeRangeType}/>
           </div>
           <div className={styles.chartCard}>
             <div className={styles.chartTitle}>活跃度历史趋势</div>
-            <LineChart data={data.activityHistory} color="#3b82f6" unit="%"/>
+            <LineChart data={data.activityHistory} color="#3b82f6" unit="%" timeRangeType={timeRangeType}/>
           </div>
           <div className={styles.chartCard}>
             <div className={styles.chartTitle}>开发者参与数量历史趋势</div>
-            <LineChart data={data.participantsHistory} color="#f59e0b" />
+            <LineChart data={data.participantsHistory} color="#f59e0b" timeRangeType={timeRangeType}/>
           </div>
           <div className={styles.chartCard}>
             <div className={styles.chartTitle}>活跃 Issue/PR 数量历史趋势</div>
-            <LineChart data={data.issueCountHistory} color="#ef4444" />
+            <LineChart data={data.issueCountHistory} color="#ef4444" timeRangeType={timeRangeType}/>
           </div>
         </div>
       </div>
