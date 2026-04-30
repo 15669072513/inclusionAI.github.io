@@ -14,6 +14,9 @@ dayjs.locale("zh-cn");
 const API_BASE_URL = "https://selfoss.open-digger.cn";
 const OSS_BASE_URL = "https://oss.open-digger.cn";
 
+// CORS 代理
+const CORS_PROXY = "https://corsproxy.io/?";
+
 // 项目列表数据接口
 interface LeaderboardItem {
   rank: number;
@@ -107,7 +110,8 @@ async function checkProjectPlatforms(items: LeaderboardItem[]): Promise<Leaderbo
 async function fetchLeaderboardData(timeType: "month" | "year", year: string, month: string): Promise<LeaderboardItem[]> {
   try {
     const dateStr = timeType === "month" ? `${year}${parseInt(month)}` : year;
-    const url = `${API_BASE_URL}/open_leaderboard/agentic%20ai/project/${timeType}/${dateStr}/data.json`;
+    const targetUrl = `${API_BASE_URL}/open_leaderboard/agentic%20ai/project/${timeType}/${dateStr}/data.json`;
+    const url = `${CORS_PROXY}${encodeURIComponent(targetUrl)}`;
     console.log("Fetching leaderboard from:", url);
     
     const response = await fetch(url);
